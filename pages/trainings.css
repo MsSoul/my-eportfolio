@@ -1,0 +1,165 @@
+
+/* ==========================================================================
+   trainings.html css
+   ========================================================================== */
+.section-trainings-wrapper {
+    width: min(1100px, 95%);
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.trainings-main-h1 h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Crisp 3-Column dynamic layout configuration grid */
+.trainings-three-grid {
+    display: grid !important;
+    /* CHANGED: auto-fit with 280px minimum ensures 3 grids easily sit inside 1100px width */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; 
+    gap: 20px !important;
+    align-items: start !important;
+    width: 100% !important; /* FIXED: Corrected broken validation syntax "!;" */
+    box-sizing: border-box !important;
+}
+/* Card item styling using your design palette styles */
+.individual-training-card {
+    background: rgb(241, 188, 188);
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+    width: 100%; /* Ensures card is driven by the grid track width, not content */
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.individual-training-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+/* Image Frames uniform control sizing rules */
+.certificate-card-frame, 
+.certificate-display-frame {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    background-color: #eaeaea;
+}
+
+
+.training-photo-link {
+    text-decoration: none;
+    display: block;
+}
+.individual-training-card h2 {
+    font-size: 16px;
+    color: #2c2c2c;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    font-weight: 700;
+}
+.individual-training-card h2:hover {
+    color: #d15656;
+}
+.training-date-tag {
+    font-size: 13px;
+    color: #555555;
+    font-style: italic;
+    margin: 0 0 15px 0;
+}
+/* View Details Action Link formatting rules */
+.training-card-button {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 6px 14px;
+    background: #ffffff;
+    color: #d15656;
+    margin-top: auto;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.training-card-button:hover {
+    background: #d15656;
+    color: #ffffff;
+}
+/* --------------------------------------------------------------------------
+   Checkbox Toggle Mechanism Layout
+   -------------------------------------------------------------------------- */
+.trainings-toggle-state {
+    display: none;
+}
+.hidden-trainings-contents {
+    display: contents;
+}
+.hidden-trainings-contents .individual-training-card {
+    display: none;
+}
+.trainings-toggle-state:checked ~ .trainings-three-grid .hidden-trainings-contents .individual-training-card {
+    display: flex;
+    animation: fadeInReveal 0.3s ease-out both;
+}
+.trainings-action-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.trainings-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    background: rgb(241, 188, 188);
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: bold;
+    color: #d15656;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.trainings-toggle-btn:hover {
+    background: #ecd4d4;
+    transform: translateY(-1px);
+}
+.trainings-arrow-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+.trainings-toggle-state:checked ~ .trainings-action-row .btn-text-state::after {
+    content: "Less Trainings";
+}
+.trainings-toggle-state:not(:checked) ~ .trainings-action-row .btn-text-state::after {
+    content: "More Trainings";
+}
+.trainings-toggle-state:checked ~ .trainings-action-row .btn-text-state {
+    display: none;
+}
+.trainings-toggle-state:checked ~ .trainings-action-row .trainings-arrow-icon {
+    transform: rotate(180deg);
+}
+@keyframes fadeInReveal {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

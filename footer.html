@@ -1,0 +1,135 @@
+<footer style="background-color: #f37373; color: #fff; font-size: 0.8rem; padding: 0.5rem 0;">
+    <style>
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 8px; /* Adds space between icons and text */
+        }
+
+        /* Base Icons & Email Container */
+        .social-icons a, .email-container {
+            color: white !important;
+            font-size: 20px;
+            transition: color 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 0 !important;
+            
+            /* Force completely transparent backgrounds and remove all boxes/borders */
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+
+        /* Hover State: Turns charcoal gray for readability against a pink background */
+        .social-icons a:hover, .email-container:hover {
+            color: #666 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Kills any extra rotating circles, pseudo-borders, or text lines trying to appear on hover */
+        .social-icons a:hover::before,
+        .social-icons a:hover::after,
+        .email-container:hover::before,
+        .email-container:hover::after,
+        .social-icons a::before,
+        .social-icons a::after {
+            content: none !important;
+            display: none !important;
+            animation: none !important;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Email Tooltip Styling */
+        .email-container {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
+
+    <div id="socialLinks" class="social-icons">
+        <a href="https://www.linkedin.com/in/pjvivares0910" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/MsSoul" target="_blank" title="GitHub">
+            <i class="fab fa-github"></i>
+        </a>
+        <div class="email-container" id="emailWrapper" onclick="copyEmail()" title="Copy Email">
+            <i class="fas fa-envelope" id="emailIcon"></i>
+        </div>
+    </div>
+
+    <p style="text-align: center; margin: 0; padding-bottom: 0.2rem; font-size: 0.75rem; opacity: 0.9;">
+        &copy; 2026 Pretzil Joy Vivares. All Rights Reserved.
+    </p>
+
+    <p style="text-align: center; margin: 0; padding-bottom: 0.2rem; font-size: 0.75rem; opacity: 0.6;">
+        Last Updated: June 23, 2026
+    </p>
+</footer>
+
+<script>
+    // Copy email feature with fallback strategy
+    function copyEmail() {
+        const emailText = "pjvivares0910@gmail.com";
+        const wrapper = document.getElementById("emailWrapper");
+        const icon = document.getElementById("emailIcon");
+
+        function handleSuccess() {
+            wrapper.title = "Copied!";
+            // Force green color overriding the !important rule in CSS
+            icon.style.setProperty('color', '#73f373', 'important');
+            icon.classList.replace("fa-envelope", "fa-check");
+
+            setTimeout(() => {
+                wrapper.title = "Copy Email";
+                icon.style.color = "";
+                icon.classList.replace("fa-check", "fa-envelope");
+            }, 2000);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(emailText)
+                .then(handleSuccess)
+                .catch(err => console.error("Failed to copy email:", err));
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = emailText;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                handleSuccess();
+            } catch (err) {
+                console.error("Fallback script failed:", err);
+            }
+            document.body.removeChild(textArea);
+        }
+    }
+
+    // Fetches your file relative to the root project folder
+    // Note: Make sure an element with id="contact-info" exists in your index.html layout!
+    fetch('mycontact.html')
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+        .then(data => {
+            const target = document.getElementById('contact-info');
+            if (target) target.innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading contact info:', error);
+        });
+</script>

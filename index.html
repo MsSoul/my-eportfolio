@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pretzil Joy Vivares</title>
+    <link rel="prefetch" href="header.html">
+    <link rel="prefetch" href="footer.html">
+    <link rel="prefetch" href="mycontact.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="body.css">
+    <link rel="prefetch" href="pages/trainings.html">
+
+    
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        section {
+            padding: 40px 20px;
+            border-bottom: 2px solid rgb(241, 188, 188);
+        }
+        
+        /* ==========================================
+           FLOATING SIDE ICON NAVIGATION
+           ========================================== */
+        .floating-nav {
+            position: fixed;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 12px 10px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            
+            /* Hidden by default with smooth transitions */
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Class applied via JS once scrolling past About Me */
+        .floating-nav.visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .floating-nav a {
+            color: #777777;
+            font-size: 18px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        
+        .floating-nav a::before {
+            content: attr(data-title);
+            position: absolute;
+            right: 50px;
+            background: #222222;
+            color: #ffffff;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-family: 'Quicksand', sans-serif;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .floating-nav a:hover::before {
+            opacity: 1;
+            visibility: visible;
+            right: 45px;
+            background: #f37373;
+        }
+        .floating-nav a:hover {
+            color: #f37373;
+            background: rgba(243, 115, 115, 0.08);
+        }
+        .floating-nav a.active {
+            color: #ffffff !important;
+            background: #f37373;
+            box-shadow: 0 4px 10px rgba(243, 115, 115, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .floating-nav {
+                top: auto;
+                bottom: 20px;
+                right: 50%;
+                transform: translate(50%, 40px); /* Tucked down slightly when hidden */
+                flex-direction: row;
+                border-radius: 20px;
+                padding: 8px 15px;
+                box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+            }
+            .floating-nav.visible {
+                transform: translate(50%, 0);
+            }
+            .floating-nav a::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Icon Menu Elements -->
+    <nav class="floating-nav" id="sideNav">
+        <a data-target="aboutme" data-title="About Me"><i class="fa-solid fa-user"></i></a>
+        <a data-target="skills" data-title="Skills"><i class="fa-solid fa-layer-group"></i></a>
+        <a data-target="experience" data-title="Experience"><i class="fa-solid fa-briefcase"></i></a>
+        <a data-target="trainings" data-title="Trainings"><i class="fa-solid fa-graduation-cap"></i></a>
+        <a data-target="projects" data-title="Projects"><i class="fa-solid fa-laptop-code"></i></a>
+        <a data-target="activities" data-title="Activities"><i class="fa-solid fa-chart-line"></i></a>
+    </nav>
+
+    <div id="header"></div>
+
+    <main id="content">
+        <section id="aboutme"></section>
+        <section id="skills"></section>
+        <section id="experience"></section>
+        <section id="trainings"></section>
+        <section id="projects"></section>
+        <section id="activities"></section>
+    </main>
+
+    <div id="loader">
+        <div class="loader-content">
+            <div class="icon-container">
+                <span class="icon">❤️</span>
+                <span class="icon">⭐</span>
+                <span class="icon">🤏</span>
+                <span class="icon">💖</span>
+                <span class="icon">✨</span>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+        // ==========================================
+        // CLIPBOARD COPY UTILITY
+        // ==========================================
+        function copyEmail() {
+            const emailText = "pjvivares0910@gmail.com";
+            const wrapper = document.getElementById("emailWrapper");
+            const icon = document.getElementById("emailIcon");
+
+            function handleSuccess() {
+                wrapper.title = "Copied!";
+                icon.classList.replace("fa-envelope", "fa-check");
+                icon.style.setProperty('color', '#73f373', 'important');
+                setTimeout(() => {
+                    wrapper.title = "Click to copy email";
+                    icon.classList.replace("fa-check", "fa-envelope");
+                    icon.style.color = "";
+                }, 2000);
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(emailText).then(handleSuccess).catch(err => console.error(err));
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = emailText;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    handleSuccess();
+                } catch (err) {
+                    console.error(err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // ==========================================
+        // SYSTEM DATETIME CLOCK
+        // ==========================================
+        function updateDateTime() {
+            const el = document.getElementById("live-datetime");
+            if (!el) return;
+            const now = new Date();
+            const date = now.toLocaleDateString("en-US");
+            const time = now.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            });
+            el.textContent = `${date} @ ${time} // Asia/Manila`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000); 
+
+        // ==========================================
+        // STRUCTURAL COMPONENT LOADER
+        // ==========================================
+        async function loadHTML(id, file) {
+            try {
+                const res = await fetch(file);
+                if (!res.ok) throw new Error(`Failed loading: ${file}`);
+                const html = await res.text();
+                const target = document.getElementById(id);
+                if (target) target.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // ==========================================
+        // SPY SCROLL / NAV HIGHLIGHT TRACKER
+        // ==========================================
+        // ==========================================
+        // SPY SCROLL / NAV HIGHLIGHT TRACKER (FIXED)
+        // ==========================================
+        function initScrollSpy() {
+            const sections = document.querySelectorAll('main section');
+            const sideNav = document.getElementById('sideNav');
+            const navLinks = document.querySelectorAll('#sideNav a');
+            
+            if (!sections.length || !sideNav) return;
+
+            // Configuration: Trigger adjustments when a section occupies 30% of the viewport area
+            const observerOptions = {
+                root: null,
+                rootMargin: '-10% 0px -60% 0px', 
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const current = entry.target.getAttribute('id');
+
+                        // 1. Toggle entire Sidebar Floating visibility context
+                        if (current && current !== "aboutme") {
+                            sideNav.classList.add('visible');
+                        } else {
+                            sideNav.classList.remove('visible');
+                        }
+
+                        // 2. Synchronize link highlight states safely
+                        navLinks.forEach(link => {
+                            if (link.getAttribute('href') === `#${current}`) {
+                                link.classList.add('active');
+                            } else {
+                                link.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            // Bind the observer to track all active container sections
+            sections.forEach(section => observer.observe(section));
+        }
+
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        async function init() {
+            await loadHTML('header', 'header.html');
+            await loadHTML('footer', 'footer.html');
+
+            const subPages = ['aboutme', 'skills', 'experience', 'trainings', 'projects', 'activities'];
+            for (const page of subPages) {
+                await loadHTML(page, `pages/${page}.html`);
+            }
+
+            if (typeof window.setAge === 'function') {
+                window.setAge();
+            } else if (document.getElementById("age")) {
+                const ageEl = document.getElementById("age");
+                const birthDate = new Date(ageEl.getAttribute("data-birthdate"));
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                ageEl.textContent = age;
+            }
+
+            setTimeout(() => {
+                if (typeof window.startMyTitleRotator === 'function') {
+                    window.startMyTitleRotator();
+                }
+            }, 50);
+
+            // Inside your async function init() { ... }
+            initScrollSpy();
+            initCleanNavigation(); // Add this line here!
+            
+            const loader = document.getElementById('loader');
+            if (loader) loader.style.display = 'none';
+        }
+        
+
+        init();
+
+        
+        // ==========================================================
+// UNIFIED DYNAMIC PAGE LOADER FOR TRAININGS & ACTIVITIES
+// ==========================================================
+function loadPage(pageUrl, activeNavId) {
+    // 1. Determine the target container based on the pageUrl string
+    let targetId = 'trainings'; // Default fallback
+    
+    if (pageUrl.includes('recentActivity/') || pageUrl.includes('activities.html')) {
+        targetId = 'activities'; // Redirects to your activities section container
+    }
+
+    // 2. Target the correct permanent section container from index.html
+    const contentArea = document.getElementById(targetId);
+    if (!contentArea) {
+        console.warn(`Target container #${targetId} not found in DOM.`);
+        return;
+    }
+
+    fetch(pageUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to load page template.');
+            return response.text();
+        })
+        .then(htmlContent => {
+            contentArea.innerHTML = htmlContent;
+            
+            // Smoothly scroll back to the section block view anchor context
+            contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Handle navigation highlighting adjustments if passed
+            if (activeNavId) {
+                document.querySelectorAll('.nav-link, .sidebar-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                const activeLink = document.getElementById(activeNavId);
+                if (activeLink) activeLink.classList.add('active');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading page template:', error);
+        });
+}
+
+// ==========================================
+        // SMOOTH SCROLL WITHOUT CHANGING URL
+        // ==========================================
+        function initCleanNavigation() {
+            const navLinks = document.querySelectorAll('#sideNav a');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevents the # from hitting the URL bar
+                    
+                    const targetId = link.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

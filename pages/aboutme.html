@@ -1,0 +1,130 @@
+
+    <link rel="stylesheet" href="pages/section.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="section-wrapper">
+    <div class="section-title">
+        <h1>About Me</h1>
+    </div>
+
+    <div class="section-content">
+        <section class="section-block">
+            <div class="content">
+                <p class="personal-profile">
+                    Detail-oriented Computer Science graduate with experience in software development, system analysis, application testing, and technical documentation. Has hands-on experience developing, testing, and deploying mobile and web-based applications while ensuring functionality, reliability, and user requirements are met. Possesses strong problem-solving, troubleshooting, and communication skills gained through software projects, academic instruction, and technical evaluations. Currently residing in Metro Manila and seeking opportunities to grow professionally while contributing technical expertise and a commitment to delivering high-quality software and IT solutions.
+                </p>
+            </div>
+        </section>
+
+        <section class="section-block">
+    <h2>Contact Me</h2>
+
+    <div class="content">
+
+        <div class="contact-list">
+
+            <!--<a class="contact-item" >
+                <i class="fa-solid fa-phone"></i>
+                <span>(+63) 964 081 4686</span>
+            </a>-->
+            <a class="contact-item" >
+                <i class="fa-solid fa-envelope"></i>
+                <span>pjvivares0910@gmail.com</span>
+            </a>
+            <a class="contact-item" href="https://github.com/MsSoul" target="_blank">
+                <i class="fab fa-github"></i>
+                <span>github.com/MsSoul</span>
+            </a>
+            <a class="contact-item" href="https://www.linkedin.com/in/pjvivares0910" target="_blank">
+                <i class="fab fa-linkedin"></i>
+                <span>linkedin.com/in/pjvivares0910</span>
+            </a>
+
+        </div>
+
+        <div class="download-container">
+            <a href="assets/Pretzil_Joy_Vivares_CV.pdf"
+               download="Pretzil_Joy_Vivares_CV.pdf"
+               class="download-btn">
+                <i class="fa-solid fa-download"></i>
+                Download My CV
+            </a>
+        </div>
+
+    </div>
+</section>
+
+        <section class="section-block">
+            <h2>Education</h2>
+            <div class="content">
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <h3>Bachelor of Science in Computer Science</h3>
+                        <p>Holy Trinity College of General Santos City</p>
+                        <span>Aug 2021- Jun 2025</span>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h3>Engracia L. Valdomar National High School</h3>
+                        <p>General Santos City</p>
+                        <span>2007 - 2011</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Mabuhay Elementary School</h3>
+                        <p>General Santos City</p>
+                        <span>2001 - 2007</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-- 
+        <section class="section-block">
+            <h2>Personal Profile</h2>
+            <div class="content">
+                <h3>Personal Information</h3>
+                <ul>
+                    <li><strong>Age:</strong> <span id="age" data-birthdate="1994-09-10"></span></li>
+                    <li><strong>Gender:</strong> Female</li>
+                    <li><strong>Height:</strong> 5'4"</li>
+                    <li><strong>Weight:</strong> 48 kg</li>
+                    <li><strong>Religion:</strong> Roman Catholic</li>
+                    <li><strong>Civil Status:</strong> Single</li>
+                </ul>
+
+                <h3>Languages</h3>
+                <ul>
+                    <li>English</li>
+                    <li>Filipino</li>
+                    <li>Cebuano</li>
+                    <li>Serbian (Learning)</li>
+                </ul>
+
+                <h3>Government IDs & Benefits</h3>
+                <ul>
+                    <li>Philippine Passport</li>
+                    <li>Tax Identification Number (TIN)</li>
+                    <li>Social Security System (SSS)</li>
+                    <li>PhilHealth</li>
+                    <li>Pag-IBIG Fund</li>
+                </ul>
+            </div>
+        </section>
+        -->
+    </div>
+</div>
+
+
+<script>
+function calculateAge(birthDateString) {
+    const today = new Date();
+    const birthDate = new Date(birthDateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+document.getElementById("age").textContent = calculateAge("1994-09-10");
+</script>

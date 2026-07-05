@@ -1,0 +1,355 @@
+ @font-face {
+            font-family: 'Camaufalge';
+            src: url('assets/Camaufalge.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+.code-icon {
+    color: WHITE;
+    font-weight: bold;
+    margin-right: 6px;
+}
+        body {
+            margin: 0;
+            font-family: 'Camaufalge', Arial, sans-serif;
+            background-color: #f9f9f9;
+            letter-spacing: 0.05em;
+
+        }
+
+        header {
+            position: relative;
+            background: url('assets/me/meee.jpg') no-repeat center center;
+           
+            background-color: #000;
+            color: white;
+            width: 100%;
+            
+            /* Center alignment modifications */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 300px; /* UPDATED: Shrunk down from 320px */
+            letter-spacing: 0.05em;
+
+        }
+
+        /* Dark overlay */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(243, 115, 115, 0.2); /* Custom transparent pink */
+            z-index: 0;
+        }
+
+        /* Keep content above overlay */
+        header * {
+            position: relative;
+            z-index: 1;
+        }
+
+        header img {
+            width: 140px;  /* UPDATED: Scaled down slightly to 140px for better vertical balance */
+            height: 140px; /* UPDATED: Scaled down slightly to 140px for better vertical balance */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f37373;
+            margin-bottom: 0.3rem; /* Space between picture and name */
+        }
+
+        header h1 {
+            margin: 0.3rem 0 0.1rem;
+            text-transform: uppercase;
+            font-size: 1.8rem; /* UPDATED: Scaled down slightly to match the smaller header size */
+        }
+
+        header p.title {
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: white;
+            margin-top: 0.4rem;
+        }
+
+        .contact-info a {
+            color: rgb(149, 195, 212);
+            text-decoration: none;
+            margin: 0 0.3rem;
+            text-shadow: #000 0 0 2px;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================================================================
+           Navigation Bar & Upgraded Pill Active State Setup
+           ========================================================================== */
+        nav {
+            background-color: #f37373;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            flex-wrap: wrap;
+            gap: 0.75rem;        /* Slightly increased gap to match the larger text presence */
+            padding: 0.8rem;     /* Extra breathing room inside the navigation bar track */
+            
+            letter-spacing: 0.05em;
+
+        }
+
+        /* NAV ITEM BASE */
+        nav a {
+            position: relative;
+            color: white;
+            padding: 0.6rem 1.6rem; /* Scaled up padding to perfectly match the bigger font size */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;      /* UPDATED: Increased text size for higher visibility and punch */
+            letter-spacing: 0.3px;  
+            border-radius: 25px;    /* Slightly enhanced capsule curve border radius to match sizing scales */
+            transition: background-color 0.15s ease-in-out;
+            box-sizing: border-box;
+            letter-spacing: 0.05em;
+
+        }
+
+        nav a:hover {
+            background-color: rgb(226, 76, 76);
+            letter-spacing: 0.05em;
+
+        }
+
+        /* ACTIVE PILL STATE */
+        nav a.active {
+            background-color: WHITE;
+            color: #F37373;
+            border-radius: 25px;    
+            overflow: hidden;       
+            letter-spacing: 0.05em;
+
+        }
+
+        /* RUNNING BORDER EFFECT */
+        nav a.active::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border-radius: 25px;    /* Matches the new curve scale perfectly */
+
+            /* Creates a moving highlight line */
+            background: linear-gradient(
+                120deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.9),
+                #f37373,
+                transparent 60%
+            );
+
+            background-size: 200% 200%;
+            animation: moveBorder 1.5s linear infinite;
+
+            /* Show only on border area */
+            padding: 2px;
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+
+            box-sizing: border-box;
+        }
+
+        /* ANIMATION */
+        @keyframes moveBorder {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        /* Main viewport wrapper for loaded sub-pages */
+        #content {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .aboutme-wrapper {
+                padding: 0 10px;
+            }
+            nav a {
+                font-size: 0.95rem; /* Marginally steps down on small phones to stop weird line breakage */
+                padding: 0.5rem 1.2rem;
+            }
+        }
+
+/* Container that masks out the titles that aren't active */
+.title-container {
+    height: 30px;          /* Explicit pixel height prevents custom font metric glitches */
+    overflow: hidden;
+    position: relative;
+    display: block;        /* Ensures it fills correctly in a flexbox layout */
+    width: 100%;           /* Allows content to read from full width center */
+    margin: 0 auto;
+}
+
+/* The element that moves upward */
+.title-slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* Keeps all incoming text perfectly centered */
+    
+    /* MODIFIED: Bypasses JavaScript completely with an infinite keyframe loop */
+    animation: rotateTitles 5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+/* Individual titles styling */
+.title-item {
+    height: 30px;          /* Must match the container exactly */
+    line-height: 30px;     /* Vertically centers text inside the 30px slot */
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 1.05rem;    /* Matches your original template's size */
+    color: white; 
+    text-transform: none;  /* Keeps your exact casing style */
+}
+
+/* ANIMATION TIMING BREAKDOWN (4 Items Total, ~1s holding time + transit per item):
+  0% to 18%   : Holds on Item 1 (0px)
+  22% to 40%  : Holds on Item 2 (-30px)
+  44% to 62%  : Holds on Item 3 (-60px)
+  66% to 84%  : Holds on Item 4 (-90px)
+  88% to 100% : Snaps seamlessly back to Item 1
+*/
+@keyframes rotateTitles {
+    0%, 18% {
+        transform: translateY(0px);
+    }
+    22%, 40% {
+        transform: translateY(-30px);
+    }
+    44%, 62% {
+        transform: translateY(-60px);
+    }
+    66%, 84% {
+        transform: translateY(-90px);
+    }
+    88%, 100% {
+        transform: translateY(0px);
+    }
+}
+
+ /* Row layout container instead of a grid */
+        .meta-info-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 5px auto;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff; /* Forces all text elements to white */
+        }
+
+        /* Clean badges without borders or background shapes */
+        .icon-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff; /* Forces the SVG icon line color to white */
+            flex-shrink: 0;
+        }
+
+        .meta-text {
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .meta-text .country-code {
+            font-size: 10px;
+            vertical-align: super;
+            margin-left: 2px;
+            font-weight: bold;
+        }
+
+     
+        /* ==========================================================================
+   Social Icons Wrapper 
+   ========================================================================== */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* Base Icons & Email Container */
+.social-icons a, .email-container {
+    color: white !important;
+    font-size: 20px;
+    transition: color 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 0 important;
+    
+    /* Force completely transparent backgrounds and remove all boxes/borders */
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* Hover State: Just turns pink. No scale, no shapes, no background color change */
+.social-icons a:hover, .email-container:hover {
+    color: #f37373 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Kills any extra rotating circles, pseudo-borders, or text lines trying to appear on hover */
+.social-icons a:hover::before,
+.social-icons a:hover::after,
+.email-container:hover::before,
+.email-container:hover::after,
+.social-icons a::before,
+.social-icons a::after {
+    content: none !important;
+    display: none !important;
+    animation: none !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Email Tooltip Styling */
+.email-container {
+    position: relative;
+    display: inline-block;
+}

@@ -1,0 +1,391 @@
+/* ==========================================================================
+   SHARED MINIMALIST SECTION STYLES
+   Used by: About Me, Skills, Experience, Projects, Trainings, Activities
+   ========================================================================== */
+
+.section-wrapper {
+    width: min(1100px, 95%);
+    margin: 0 auto;
+    padding: 10px 0 25px; /* Tightened top/bottom padding */
+}
+
+.section-title {
+    margin-bottom: 15px; /* Reduced gap under main title */
+}
+
+.section-title h1 {
+    color: #f37373;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.section-block {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 25px; /* Pulled sections closer together */
+}
+
+.section-block h2 {
+    color: #f37373;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 15px; /* Reduced gap under subheadings */
+    border-bottom: 2px solid rgba(243, 115, 115, 0.15);
+    padding-bottom: 8px;
+}
+
+.section-content {
+    color: #333333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.content {
+    margin-left: 45px;
+}
+
+.section-content h3 {
+    color: #333333;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 5px 0; /* Tightened margins around labels */
+}
+
+.section-content p {
+    margin: 0 0 10px 0; /* Controlled paragraph spacing */
+    color: #333333;
+}
+
+.section-content ul {
+    padding-left: 20px;
+    margin: 0 0 15px 0; /* Normalized list spacing */
+    color: #333333;
+}
+
+.section-content li {
+    margin-bottom: 6px; /* Slightly tighter list items */
+    color: #333333;
+}
+
+.section-content strong {
+    color: #222222;
+}
+
+.personal-profile {
+    color: #333333;
+    text-align: justify;
+    font-size: 16px; /* Matched to section-content font size */
+}
+
+/* ==========================================================================
+   CONTACT LAYOUT
+   ========================================================================== */
+
+.contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px; /* Reduced row gap */
+    margin-bottom: 15px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 200px;
+    color: #333333;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.25s;
+}
+
+.contact-item i {
+    width: 32px;
+    color: #f37373;
+    text-align: center;
+}
+
+.contact-item span {
+    color: #333333;
+}
+
+.contact-item a {
+    color: #f37373;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+.contact-item:hover span {
+    color: #f37373;
+}
+
+/* ==========================================================================
+   DOWNLOAD BUTTON & TIMELINE
+   ========================================================================== */
+
+.download-container {
+    margin-top: 15px;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f37373;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.download-btn:hover {
+    background: #e26262;
+}
+.timeline-item {
+    margin-bottom: 15px;
+    padding-left: 20px; /* Slightly increased padding to make room for the circle */
+    border-left: 2px solid rgba(243, 115, 115, 0.3);
+    position: relative; /* Required so the circle positions itself relative to this item */
+    
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    
+    /* Center the circle on top of the left border */
+    left: -8px; /* Adjust this based on your circle's width so it sits perfectly on the 2px line */
+    top:4px;
+   
+    
+    /* Create the circle */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    
+    /* Styling the circle (using the matching pink tone from your border) */
+    background-color: rgb(249, 248, 248); 
+    border: 2px solid #f37373;
+}
+
+.timeline-item span {
+    font-size: 14px;
+    color: #777777;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .section-wrapper {
+        width: 90%;
+        padding: 10px 0 1ch;
+    }
+    .section-title h1 {
+        font-size: 32px;
+    }
+    .section-block h2 {
+        font-size: 24px;
+    }
+    .contact-list {
+        gap: 15px;
+    }
+}
+ /* ==========================================================================
+   skills.html css
+   ========================================================================== */
+/* Container holding the tech blocks */
+.tech-sections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 2-Column Grid Layout for Badges */
+.tech-badges-grid-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Clean, larger layout block items */
+.tech-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgb(241, 188, 188);
+    border-radius: 6px;
+}
+
+
+/* Larger Text and Consistent Colors */
+.tech-icon {
+    font-size: 24px; /* Increased icon scale */
+    color: #f37373;
+    width: 40px;
+    text-align: center;
+}
+
+.tech-label {
+    font-size: 16px; /* Increased font scale */
+    font-weight: 500;
+    color: #333333;
+}
+
+
+/* Mobile responsive fallback to 1 column if the browser screen is narrow */
+@media (max-width: 500px) {
+    .tech-badges-grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skills-main-wrapper h2 {
+    font-size: 16px;
+}
+
+/* ==========================================================================
+   experience.html css
+   ========================================================================== */
+
+/* Main block configuration for each card container */
+.experience-card-highlight {
+    background: transparent;
+    border-radius: 6px;
+    border: 2px solid rgba(243, 115, 115, 0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 2px 10px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Subtle interactive lifting transition on cursor hover */
+.experience-card-highlight:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Remove default disclosure triangle from summary tag elements */
+summary {
+    list-style: none;
+    cursor: pointer;
+    outline: none;
+}
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Header layout configuration */
+.job-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns metadata box straight with top of text title line */
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 3px 0;
+}
+
+.job-title-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.job-title-group h2 {
+    color: #f37373;
+    margin: 0 0 4px 0;
+    font-size: 24px;
+}
+
+.job-company {
+    font-weight: 600;
+    font-size: 16px;
+    color: #4a4a4a;
+    margin: 0 0 4px 0;
+}
+
+.department-subtitle {
+    font-style: italic;
+    font-size: 16px;
+    color: #555555;
+    margin: 0;
+}
+
+.job-meta-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    white-space: nowrap; /* Keeps date elements clean without breaking values down */
+}
+
+.job-year {
+    font-weight: bold;
+    color: #d15656;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+/* Style configuration for carets */
+.accordion-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.5);
+    color: #d15656;
+    border-radius: 50%;
+    font-size: 14px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+summary:hover .accordion-icon {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Flips the caret icon upside down gracefully when opened */
+details[open] .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* Inner padding buffer for list content container box */
+.details-content {
+    padding-top: 15px;
+    animation: fadeInSlide 0.2s ease-out;
+}
+
+.experience-card-highlight ul {
+    list-style-type: disc;
+    padding-left: 30px;
+    margin: 0;
+    text-align: justify;
+}
+
+.experience-card-highlight ul li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-size: 16px;
+    color: #2c2c2c;
+}
+
+/* Clean appearance animation keyframe */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

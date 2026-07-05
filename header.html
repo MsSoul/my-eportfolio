@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pretzil Joy Vivares</title>
+
+    <link rel="preload" as="image" href="assets/me/meee.jpg">
+    
+    <link rel="prefetch" href="pages/aboutme.html">
+    <link rel="prefetch" href="pages/skills.html">
+    <link rel="prefetch" href="pages/experience.html">
+    <link rel="prefetch" href="pages/trainings.html">
+    <link rel="prefetch" href="pages/projects.html">
+    <link rel="prefetch" href="pages/activities.html">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body>
+    <header>
+        <img src="assets/me/me.jpg" alt="Pretzil Joy Vivares">
+        <h1>Pretzil Joy Vivares</h1>
+        
+        <div class="meta-info-row">
+            <div class="meta-item">
+                <div class="icon-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="meta-text">
+                    Wawa, Taguig City, Manila, Philippines <span class="country-code">PH</span>
+                </div>
+            </div>
+            
+            <div class="meta-item">
+                <div class="icon-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="meta-text" id="live-datetime"></div>
+            </div>
+        </div>
+        
+        <div class="title-container">
+            <div class="title-slider" id="title-slider">
+                <div class="title-item">
+                    <span class="code-icon">&lt;/&gt;</span>  Software Developer  <span class="code-icon">&lt;/&gt;</span>
+                </div>
+                <!--<div class="title-item">
+                    <span class="code-icon">&lt;/&gt;</span>  Junior Android Application Developer  <span class="code-icon">&lt;/&gt;</span>
+                </div>
+                <div class="title-item">
+                    <span class="code-icon">&lt;/&gt;</span>  Junior Full-Stack Developer  <span class="code-icon">&lt;/&gt;</span>
+                </div>-->
+                <div class="title-item">
+                    <span class="code-icon">&lt;/&gt;</span>  Junior QA Tester  <span class="code-icon">&lt;/&gt;</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="socialLinks" class="social-icons">
+            <a href="https://www.linkedin.com/in/pjvivares0910" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/MsSoul" target="_blank" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <div class="email-container" id="emailWrapper" onclick="copyEmail()" title="Copy Email">
+                <i class="fas fa-envelope" id="emailIcon"></i>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#aboutme" data-page="aboutme.html" class="active">About Me</a>
+        <a href="#skills" data-page="skills.html">Skills</a>
+        <a href="#experience" data-page="experience.html">Work Experience</a>
+        <a href="#trainings" data-page="trainings.html">Trainings & Seminars</a>
+        <a href="#projects" data-page="projects.html">My Projects</a>
+        <a href="#activities" data-page="activities.html">Recent Activities</a>
+    </nav>
+    <script>
+        
+
+        function updateDateTime() {
+            const el = document.getElementById("live-datetime");
+            if (!el) return;
+
+            const now = new Date();
+            const date = now.toLocaleDateString("en-US");
+            const time = now.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            });
+
+            el.textContent = `${date} @ ${time} // Asia/Manila`;
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 1000); 
+
+        function loadPageContent(targetId, url) {
+            const targetEl = document.getElementById(targetId);
+            if (!targetEl) {
+                console.warn(`Target element #${targetId} not found syntax workspace.`);
+                return;
+            }
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`Could not fetch ${url}`);
+                    return response.text();
+                })
+                .then(html => {
+                    targetEl.innerHTML = html;
+
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const scripts = doc.querySelectorAll('script');
+                    scripts.forEach(script => {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.body.appendChild(newScript).remove();
+                    });
+                })
+                .catch(error => {
+                    targetEl.innerHTML = `<p style="color:red;">Error loading requested layout space.</p>`;
+                    console.error('Layout Error:', error);
+                });
+        }
+
+        loadPageContent('contact-info', 'mycontact.html');
+
+        function handleRouting() {
+            const hash = window.location.hash; 
+            let targetLink = document.querySelector(`nav a[href="${hash}"]`);
+            
+            if (!targetLink) {
+                targetLink = document.querySelector('nav a[href="#aboutme"]');
+            }
+
+            if (targetLink) {
+                document.querySelectorAll('nav a').forEach(nav => nav.classList.remove('active'));
+                targetLink.classList.add('active');
+
+                const page = targetLink.getAttribute('data-page');
+                loadPageContent('content', page);
+            }
+        }
+
+        handleRouting();
+        window.addEventListener('hashchange', handleRouting);
+
+        window.rotatorInterval = null;
+
+        window.startMyTitleRotator = function() {
+            const slider = document.getElementById('title-slider');
+            const items = document.querySelectorAll('.title-item');
+            
+            if (!slider || items.length === 0) {
+                console.warn("Slider elements not found yet.");
+                return;
+            }
+
+            if (window.rotatorInterval) clearInterval(window.rotatorInterval);
+
+            let currentIndex = 0;
+
+            window.rotatorInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % items.length;
+                const shiftValue = currentIndex * 30; 
+                slider.style.transform = `translateY(-${shiftValue}px)`;
+            }, 1000); 
+        };
+    </script>
+</body>
+</html>
