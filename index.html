@@ -9,8 +9,6 @@
     <link rel="prefetch" href="mycontact.html">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="body.css">
-    <link rel="prefetch" href="training/training.css">
-    <link rel="prefetch" href="activities/activities.css">
 
 
     
@@ -24,6 +22,10 @@
         section {
             padding: 40px 20px;
             border-bottom: 2px solid rgb(241, 188, 188);
+        }
+        #trainings,
+        #activities {
+            transition: opacity .2s ease;
         }
         
         /* ==========================================
@@ -327,48 +329,114 @@
 
         init();
 
-        
-        // ==========================================================
-// UNIFIED DYNAMIC PAGE LOADER FOR TRAININGS & ACTIVITIES
+  // ==========================================================
+// UNIFIED DYNAMIC PAGE LOADER (NO FOUC)
 // ==========================================================
-function loadPage(pageUrl, activeNavId) {
-    // 1. Determine the target container based on the pageUrl string
-    let targetId = 'trainings'; // Default fallback
-    
-    if (pageUrl.includes('recentActivity/') || pageUrl.includes('activities.html')) {
-        targetId = 'activities'; // Redirects to your activities section container
+
+const loadedStyles = new Set();
+
+function loadStylesFromHTML(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    const styles = [...doc.querySelectorAll('link[rel="stylesheet"]')];
+
+    return Promise.all(styles.map(link => {
+        const href = link.getAttribute("href");
+
+        if (!href || loadedStyles.has(href)) {
+            return Promise.resolve();
+        }
+
+        return new Promise(resolve => {
+            const css = document.createElement("link");
+            css.rel = "stylesheet";
+            css.href = href;
+
+            css.onload = () => {
+                loadedStyles.add(href);
+                resolve();
+            };
+
+            css.onerror = resolve;
+
+            document.head.appendChild(css);
+        });
+    }));
+}
+
+async function loadPage(pageUrl, activeNavId) {
+
+    let targetId = "trainings";
+
+    if (
+        pageUrl.includes("recentActivity/") ||
+        pageUrl.includes("activities.html")
+    ) {
+        targetId = "activities";
     }
 
-    // 2. Target the correct permanent section container from index.html
     const contentArea = document.getElementById(targetId);
+
     if (!contentArea) {
-        console.warn(`Target container #${targetId} not found in DOM.`);
+        console.warn(`Target container #${targetId} not found.`);
         return;
     }
 
-    fetch(pageUrl)
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to load page template.');
-            return response.text();
-        })
-        .then(htmlContent => {
-            contentArea.innerHTML = htmlContent;
-            
-            // Smoothly scroll back to the section block view anchor context
-            contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Hide while loading
+    contentArea.style.opacity = "0";
+    contentArea.style.pointerEvents = "none";
 
-            // Handle navigation highlighting adjustments if passed
-            if (activeNavId) {
-                document.querySelectorAll('.nav-link, .sidebar-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                const activeLink = document.getElementById(activeNavId);
-                if (activeLink) activeLink.classList.add('active');
-            }
-        })
-        .catch(error => {
-            console.error('Error loading page template:', error);
+    try {
+
+        const response = await fetch(pageUrl);
+
+        if (!response.ok) {
+            throw new Error("Failed to load page.");
+        }
+
+        const htmlContent = await response.text();
+
+        // Wait for all stylesheets inside the HTML
+        await loadStylesFromHTML(htmlContent);
+
+        // Remove stylesheet links from HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, "text/html");
+
+        doc.querySelectorAll('link[rel="stylesheet"]').forEach(link => link.remove());
+
+        contentArea.innerHTML = doc.body.innerHTML;
+
+        // Show after CSS is ready
+        requestAnimationFrame(() => {
+            contentArea.style.opacity = "1";
+            contentArea.style.pointerEvents = "";
         });
+
+        contentArea.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        if (activeNavId) {
+            document
+                .querySelectorAll(".nav-link, .sidebar-link")
+                .forEach(link => link.classList.remove("active"));
+
+            const activeLink = document.getElementById(activeNavId);
+
+            if (activeLink) {
+                activeLink.classList.add("active");
+            }
+        }
+
+    } catch (err) {
+        console.error(err);
+
+        contentArea.style.opacity = "1";
+        contentArea.style.pointerEvents = "";
+    }
 }
 
 // ==========================================
