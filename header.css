@@ -18,11 +18,12 @@
         }
 
         header {
-            position: relative;
+             position: relative;
             background: url('assets/me/meee.jpg') no-repeat center center;
-           
+            background-size: cover;
             background-color: #000;
             color: white;
+            padding: 1.5rem 1rem; /* UPDATED: Reduced padding for a shorter height */
             
             /* Center alignment modifications */
             display: flex;
@@ -30,7 +31,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            min-height: 300px; /* UPDATED: Shrunk down from 320px */
+            min-height: 220px; /* UPDATED: Shrunk down from 320px */
             letter-spacing: 0.05em;
 
         }
